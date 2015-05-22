@@ -48,6 +48,27 @@ function get_conexao(){
 
 /*
  *
+ * Função que executa uma query e retorna o resultado
+ * Depende da constante:
+ *
+ * DB_DATABASE
+ *
+ */
+function executa_query($query){
+  mysql_select_db(DB_DATABASE);
+  $resultado = mysql_query($query);
+  if (!$resultado) {
+    $mensagem  = 'Consulta inválida: ' . mysql_error() . "\n";
+    $mensagem .= 'Consulta feita: ' . $query;
+    die($mensagem);
+  }
+  return $resultado;
+}
+
+
+
+/*
+ *
  * Retorna consulta que atualiza o número de visitantes
  *
  * Depende das constantes:
@@ -67,6 +88,7 @@ EOT;
  */
 function atualiza_visitantes(){
   $atualizacao = get_query_atualiza_visitantes();
+  executa_query($atualizacao);
 }
 
 
