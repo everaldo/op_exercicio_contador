@@ -65,6 +65,27 @@ function executa_query($query){
   return $resultado;
 }
 
+/*
+ * Verifica se uma query select retornou resultados
+ *
+ *
+ */
+function  verifica_resultado_query_select($resultado){
+  if (mysql_num_rows($resultado) == 0) {
+    die("ERRO: Nenhum resultado encontrado");
+  }
+  return true;
+}
+
+/*
+ *
+ * Analista os resultados da consulta de contagem de visitas
+ *
+ */
+function parse_resultado($resultado){
+  $linha = mysql_fetch_array($resultado);
+  return $linha["total"];
+}
 
 
 /*
@@ -76,9 +97,25 @@ function executa_query($query){
  * DB_TABLE
  */
 function get_query_atualiza_visitantes(){
-  $database = DB_TABLE; //necessário para interpolação
+  $table = DB_TABLE; //necessário para interpolação
   return <<<EOT
-    UPDATE `$database` SET total = total + 1
+    UPDATE `$table` SET total = total + 1
+EOT;
+}
+
+/*
+ *
+ * Retorna consulta que mostra o número total de visitantes
+ *
+ * Depende da constante:
+ *
+ * DB_TABLE
+ *
+*/
+function get_query_num_visitantes(){
+  $table = DB_TABLE; //necessário para interpolação
+  return <<<EOT
+    SELECT total from `$table` ORDER BY total ASC LIMIT 1
 EOT;
 }
 
@@ -87,8 +124,8 @@ EOT;
  *
  */
 function atualiza_visitantes(){
-  $atualizacao = get_query_atualiza_visitantes();
-  executa_query($atualizacao);
+  $query_atualizacao = get_query_atualiza_visitantes();
+  executa_query($query_atualizacao);
 }
 
 
@@ -106,7 +143,10 @@ function registra_visita(){
  * retorna o número de visitantes
  */
 function get_num_visitantes(){
-  return 42; //stub value
+  $query_num_visitantes = get_query_num_visitantes();
+  $resultado = executa_query($query_num_visitantes);
+  verifica_resultado_query_select($resultado);
+  return parse_resultado($resultado);
 }
 
 /*
