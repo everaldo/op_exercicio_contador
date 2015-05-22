@@ -26,6 +26,30 @@
  *
  */
 
+/*
+ * registra uma visita: aumenta o total de visitantes
+ */
+function registra_visita(){
+
+}
+
+/*
+ * retorna o número de visitantes
+ */
+function get_num_visitantes(){
+  return 42; //stub value
+}
+
+/*
+ * imprime o número de visitantes
+ *
+ */
+function imprime_contador(){
+  return '<h1>' . get_num_visitantes() . '</h1>';
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +60,8 @@
 
 </head>
 <body>
- 
+<?php
+  registra_visita();
+  echo imprime_contador(); ?>  
 </body>
 </html>
