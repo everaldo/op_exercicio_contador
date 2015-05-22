@@ -45,6 +45,31 @@ function get_conexao(){
   return $link;
 }
 
+
+/*
+ *
+ * Retorna consulta que atualiza o número de visitantes
+ *
+ * Depende das constantes:
+ *
+ * DB_TABLE
+ */
+function get_query_atualiza_visitantes(){
+  $database = DB_TABLE; //necessário para interpolação
+  return <<<EOT
+    UPDATE `$database` SET total = total + 1
+EOT;
+}
+
+/*
+ * Atualiza no banco de dados o número de visitantes
+ *
+ */
+function atualiza_visitantes(){
+  $atualizacao = get_query_atualiza_visitantes();
+}
+
+
 /*
  * registra uma visita: aumenta o total de visitantes
  *
@@ -52,6 +77,7 @@ function get_conexao(){
  */
 function registra_visita(){
   $link = get_conexao();
+  atualiza_visitantes();
 }
 
 /*
