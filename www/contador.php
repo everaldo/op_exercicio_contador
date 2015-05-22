@@ -30,21 +30,28 @@
 define('__ROOT_PATH__', dirname(dirname(__FILE__)));
 require_once(__ROOT_PATH__ . '/config.php');
 
+/*
+ * As constantes DB_HOST, DB_USER e DB_PASSWORD devem estar
+ * definidas no arquivo config.php, localizado na raiz do projeto
+ * As constantes DB_HOST, DB_USER e DB_PASSWORD devem estar
+ * definidas no arquivo config.php, localizado na raiz do projeto
+ */
+function get_conexao(){
+  //conecta ao banco de dados
+  $link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
+  if (!$link) {
+    die('Não foi possível conectar: ' . mysql_error());
+  }
+  return $link;
+}
 
 /*
  * registra uma visita: aumenta o total de visitantes
  *
- * As constantes DB_HOST, DB_USER e DB_PASSWORD devem estar
- * definidas no arquivo config.php, localizado na raiz do projeto
- *
+*
  */
 function registra_visita(){
-    //conecta ao banco de dados
-    $link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
-    if (!$link) {
-      die('Não foi possível conectar: ' . mysql_error());
-    }
-
+  $link = get_conexao();
 }
 
 /*
