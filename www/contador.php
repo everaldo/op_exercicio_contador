@@ -71,7 +71,7 @@ function executa_query($query){
  *
  * Retorna consulta que atualiza o número de visitantes
  *
- * Depende das constantes:
+ * Depende das constante:
  *
  * DB_TABLE
  */
